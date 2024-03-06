@@ -5,7 +5,7 @@
 - OrdersProcessingAPI
 
 ## UserManagementAPI
-Simple microservice for managing users built using Sprint Boot and Kotlin.
+Simple microservice for managing users built using Spring Boot and Kotlin.
 
 ### How to run
 
