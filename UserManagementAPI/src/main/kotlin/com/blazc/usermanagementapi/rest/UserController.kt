@@ -17,8 +17,8 @@ class UserController(private val dao: UserRepository) {
     }
 
     @GetMapping("/users/{id}")
-    fun getUserById(@PathVariable id: ObjectId): ResponseEntity<com.blazc.usermanagementapi.dto.User> {
-        val user = dao.findById(id)
+    fun getUserById(@PathVariable id: String): ResponseEntity<com.blazc.usermanagementapi.dto.User> {
+        val user = dao.findById(ObjectId(id))
         if (user.isEmpty) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
@@ -32,8 +32,8 @@ class UserController(private val dao: UserRepository) {
     }
 
     @PutMapping("/users/{id}")
-    fun updateUser(@PathVariable id: ObjectId, @RequestBody user: com.blazc.usermanagementapi.dto.User): ResponseEntity<com.blazc.usermanagementapi.dto.User> {
-        val existingUser = dao.findById(id)
+    fun updateUser(@PathVariable id: String, @RequestBody user: com.blazc.usermanagementapi.dto.User): ResponseEntity<com.blazc.usermanagementapi.dto.User> {
+        val existingUser = dao.findById(ObjectId(id))
         if (existingUser.isEmpty) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
@@ -46,8 +46,8 @@ class UserController(private val dao: UserRepository) {
     }
 
     @DeleteMapping("/users/{id}")
-    fun deleteUser(@PathVariable id: ObjectId): ResponseEntity<String> {
-        val existingUser = dao.findById(id)
+    fun deleteUser(@PathVariable id: String): ResponseEntity<String> {
+        val existingUser = dao.findById(ObjectId(id))
         if (existingUser.isEmpty) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }

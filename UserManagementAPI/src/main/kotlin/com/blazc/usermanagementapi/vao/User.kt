@@ -4,17 +4,18 @@ import com.blazc.usermanagementapi.dto.User
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.util.UUID
 
 @Document(collection = "products")
 class User {
     @Id
-    var id: ObjectId
-    var name: String
-    var lastname: String
-    var email: String
-    var password: String
-    var phone: String
-    var role: String // "buyer", "seller", "delivery"
+    var id: ObjectId = ObjectId.get()
+    var name: String = ""
+    var lastname: String = ""
+    var email: String = ""
+    var password: String = ""
+    var phone: String = ""
+    var role: String = "" // "buyer", "seller", "delivery"
 
     companion object {
         fun toDtoList(users: Iterable<com.blazc.usermanagementapi.vao.User>): List<User> {
@@ -26,8 +27,10 @@ class User {
         }
     }
 
-    constructor(dto: com.blazc.usermanagementapi.dto.User) {
-        this.id = dto.id
+    constructor() {}
+
+    constructor(dto: User) {
+        this.id = ObjectId(dto.id)
         this.name = dto.name
         this.lastname = dto.lastname
         this.email = dto.email
@@ -46,8 +49,8 @@ class User {
         this.role = user.role
     }
 
-    fun updateFrom(dto: com.blazc.usermanagementapi.dto.User) {
-        this.id = dto.id
+    fun updateFrom(dto: User) {
+        this.id = ObjectId(dto.id)
         this.name = dto.name
         this.lastname = dto.lastname
         this.email = dto.email
@@ -56,9 +59,9 @@ class User {
         this.role = dto.role
     }
 
-    fun toDto(): com.blazc.usermanagementapi.dto.User {
-        return com.blazc.usermanagementapi.dto.User(
-                this.id,
+    fun toDto(): User {
+        return User(
+                this.id.toString(),
                 this.name,
                 this.lastname,
                 this.email,
