@@ -1,0 +1,59 @@
+package com.blazc.usermanagementapi.rest
+
+import com.blazc.usermanagementapi.dao.UserRepository
+import com.blazc.usermanagementapi.vao.User
+import org.bson.types.ObjectId
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+
+@RestController
+@CrossOrigin
+class UserController(private val dao: UserRepository) {
+
+    @GetMapping("/users")
+    fun getAllUsers(): Iterable<com.blazc.usermanagementapi.dto.User> {
+        return User.toDtoList(dao.findAll())
+    }
+
+    @GetMapping("/users/{id}")
+    fun getUserById(@PathVariable id: ObjectId): ResponseEntity<com.blazc.usermanagementapi.dto.User> {
+        val user = dao.findById(id)
+        if (user.isEmpty) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+        return ResponseEntity.ok(user.get().toDto())
+    }
+
+    @PostMapping("/users")
+    fun insertUser(@RequestBody user: com.blazc.usermanagementapi.dto.post.PostUser): ResponseEntity<com.blazc.usermanagementapi.dto.User> {
+        val newUser = dao.insert(User(user))
+        return ResponseEntity.ok(newUser.toDto())
+    }
+
+    @PutMapping("/users/{id}")
+    fun updateUser(@PathVariable id: ObjectId, @RequestBody user: com.blazc.usermanagementapi.dto.User): ResponseEntity<com.blazc.usermanagementapi.dto.User> {
+        val existingUser = dao.findById(id)
+        if (existingUser.isEmpty) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+
+        val vao = existingUser.get()
+        vao.updateFrom(user)
+
+        dao.save(vao)
+        return ResponseEntity.ok(vao.toDto())
+    }
+
+    @DeleteMapping("/users/{id}")
+    fun deleteUser(@PathVariable id: ObjectId): ResponseEntity<String> {
+        val existingUser = dao.findById(id)
+        if (existingUser.isEmpty) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+
+        val vao = existingUser.get()
+        dao.delete(vao)
+        return ResponseEntity.ok("deleted")
+    }
+}
