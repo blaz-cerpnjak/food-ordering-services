@@ -19,8 +19,5 @@ jobs:
         java-version: '21-ea'
         cache: 'maven'
 
-    - name: Build with Maven
+    - name: Build and test with Maven
       run: mvn -B package --file pom.xml
-
-    - name: Run unit tests
-      run: java -jar target/UserManagementAPI-0.0.1-SNAPSHOT.jar --runTests
