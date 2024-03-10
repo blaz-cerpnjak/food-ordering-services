@@ -13,6 +13,7 @@ Simple microservice for managing users, built using Spring Boot and Kotlin.
 ### How to run
 
 ```console
+~$ cd UserManagementAPI
 ~$ docker-compose up
 ```
 
