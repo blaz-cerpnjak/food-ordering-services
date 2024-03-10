@@ -3,6 +3,9 @@ name: Run unit tests
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**/*'
+      - '!README.md'
 
 jobs:
   build-test-package:
