@@ -32,6 +32,9 @@ jobs:
       run: mvn -B package --file pom.xml
 
       
-    - name: Build and test Orders gRPC API
+    - name: Build Orders gRPC API
       working-directory: ./OrderProcessingAPI
+      run: ./gradlew build
+
+    - name: Test Orders gRPC API
       run: ./gradlew test
