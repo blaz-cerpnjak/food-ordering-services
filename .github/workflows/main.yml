@@ -29,7 +29,7 @@ jobs:
 
     - name: Build and test User Management API
       working-directory: ./UserManagementAPI
-      run: mvn -B package --file pom.xml
+      run: mvn -B package
 
       
     - name: Build and test Orders gRPC API
