@@ -27,6 +27,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build and test with Maven
+    - name: Build and test User Management API
       working-directory: ./UserManagementAPI
+      run: mvn -B package --file pom.xml
+
+      
+    - name: Build and test Orders gRPC API
+      working-directory: ./OrderProcessingAPI
       run: mvn -B package --file pom.xml

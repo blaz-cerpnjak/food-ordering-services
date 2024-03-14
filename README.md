@@ -2,7 +2,6 @@
  
 ### TODO:
 - RestaurantsAPI
-- OrdersProcessingAPI
 
 ## Overview
 This project serves as an example of food ordering system using a microservice approach.
