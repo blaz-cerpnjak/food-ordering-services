@@ -18,6 +18,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-mongodb-panache'
     testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.quarkus:quarkus-jdbc-h2'
 }
 
 group 'com.blazc'
