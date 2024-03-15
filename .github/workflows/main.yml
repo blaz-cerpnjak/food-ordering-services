@@ -31,6 +31,8 @@ jobs:
       working-directory: ./UserManagementAPI
       run: mvn -B package --file pom.xml
 
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v3
       
     - name: Build Orders gRPC API
       working-directory: ./OrderProcessingAPI
