@@ -32,13 +32,15 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Setup Gradle
+      working-directory: ./OrderProcessingAPI
+
+    - name: Gradle environment
       uses: gradle/gradle-build-action@v3
 
     - run: gradle wrapper 8.5
     - run: chmod +x gradlew
-      
+
     - name: Build Orders gRPC API
-      working-directory: ./OrderProcessingAPI
       run: ./gradlew build
 
     - name: Test Orders gRPC API
