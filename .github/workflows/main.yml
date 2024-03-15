@@ -33,11 +33,13 @@ jobs:
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
-      
-    - name: Run build with Gradle Wrapper
-      working-directory: ./UserManagementAPI
-      run: ./gradlew build
-    
-    - name: Test Orders gRPC API
-      working-directory: ./UserManagementAPI
-      run: ./gradlew test
+
+    - name: Build with Gradle
+      working-directory: ./OrderProcessingAPI
+      run: |
+        ./gradlew build
+
+    - name: Run Tests
+      working-directory: ./OrderProcessingAPI
+      run: |
+        ./gradlew test
