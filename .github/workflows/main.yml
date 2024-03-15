@@ -36,8 +36,9 @@ jobs:
 
     - name: Setup Gradle 8.5
     - working-directory: ./OrderProcessingAPI
-    - run: gradle wrapper 8.5
-    - run: chmod +x gradlew
+    - run: | 
+        gradle wrapper 8.5
+        chmod +x gradlew
 
     - name: Build Orders gRPC API
       run: ./gradlew build
