@@ -49,6 +49,10 @@ jobs:
       working-directory: ./OrderProcessingAPI
       run: chmod +x ./gradlew
 
+    - name: Setup Gradle
+      working-directory: ./OrderProcessingAPI
+      run: gradle wrapper --gradle-version 8.5
+
     - name: Build with Gradle
       working-directory: ./OrderProcessingAPI
       run: ./gradlew build --no-daemon
