@@ -32,14 +32,14 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: actions/cache@v3
+      with:
+        working-directory: ./OrderProcessingAPI
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('build.gradle') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
 
-    - name: Build with Gradle
+    - name: Build and test with Gradle
       working-directory: ./OrderProcessingAPI
-      run: |
-        ./gradlew build
-
-    - name: Run Tests
-      working-directory: ./OrderProcessingAPI
-      run: |
-        ./gradlew test
+      run: ./gradlew build test
