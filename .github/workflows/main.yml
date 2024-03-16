@@ -50,6 +50,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Build with Gradle
+      working-directory: ./OrderProcessingAPI
       run: ./gradlew build --no-daemon
 
     - name: Run tests
