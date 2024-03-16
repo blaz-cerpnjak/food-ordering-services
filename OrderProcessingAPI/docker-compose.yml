@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+
+  mongo_db:
+    image: mongo:7.0.6
+    volumes:
+      - mongo_data:/data/mongo
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+    networks:
+      - mongo_db_network
+
+  order_processing_api:
+    build:
+      context: .
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    restart: always
+    environment:
+      MONGO_DB_URI: mongodb://mongo_db:27017/orders_system_db
+    ports:
+      - "8080:8080"
+      - "9000:9000"
+    depends_on:
+      - mongo_db
+    networks:
+      - mongo_db_network
+
+networks:
+  mongo_db_network:
+    driver: bridge
+
+volumes:
+  mongo_data:
