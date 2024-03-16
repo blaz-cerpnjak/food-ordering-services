@@ -30,20 +30,28 @@ jobs:
     - name: Build and test User Management API
       working-directory: ./UserManagementAPI
       run: mvn -B package --file pom.xml
+      
+  build-test-orders-api:
+    runs-on: ubuntu-latest
 
-    - name: Setup Gradle
-      uses: actions/cache@v3
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
       with:
-        working-directory: ./OrderProcessingAPI
-        path: ~/.gradle/caches
-        key: ${{ runner.os }}-gradle-${{ hashFiles('build.gradle') }}
-        restore-keys: |
-            ${{ runner.os }}-gradle-
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
 
     - name: Make gradlew executable (if needed)
       working-directory: ./OrderProcessingAPI
-      run: chmod +x gradlew
+      run: chmod +x ./gradlew
 
-    - name: Build and test with Gradle
+    - name: Build with Gradle
+      run: ./gradlew build --no-daemon
+
+    - name: Run tests
       working-directory: ./OrderProcessingAPI
-      run: ./gradlew build test
+      run: ./gradlew test
