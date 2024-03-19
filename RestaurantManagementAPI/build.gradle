@@ -18,6 +18,8 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'io.quarkus:quarkus-arc'
     testImplementation 'io.quarkus:quarkus-junit5'
+    implementation 'io.quarkus:quarkus-smallrye-openapi'
+    implementation 'org.jboss.logging:jboss-logging'
 }
 
 group 'com.blazc'

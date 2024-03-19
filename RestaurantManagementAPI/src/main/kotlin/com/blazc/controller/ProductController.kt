@@ -7,9 +7,14 @@ import jakarta.inject.Inject
 import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
 import org.bson.types.ObjectId
+import org.jboss.logging.Logger
 
 @Path("/product")
 class ProductController {
+
+    companion object {
+        val LOG: Logger = Logger.getLogger(ProductController::class.java)
+    }
 
     @Inject
     lateinit var productRepository: ProductRepository
@@ -25,11 +30,12 @@ class ProductController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     fun getProductById(@PathParam("id") id: String): Uni<Product> {
-        lateinit var objectId: ObjectId
+        val objectId: ObjectId
 
         try {
             objectId = ObjectId(id)
         } catch (e: Exception) {
+            LOG.error("Error parsing id", e)
             return Uni.createFrom().failure(e)
         }
 
@@ -61,11 +67,12 @@ class ProductController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     fun deleteProduct(@PathParam("id") id: String): Uni<Boolean> {
-        lateinit var objectId: ObjectId
+        val objectId: ObjectId
 
         try {
             objectId = ObjectId(id)
         } catch (e: Exception) {
+            LOG.error("Error parsing id", e)
             return Uni.createFrom().failure(e)
         }
 

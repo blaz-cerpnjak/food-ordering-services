@@ -7,9 +7,14 @@ import jakarta.inject.Inject
 import jakarta.ws.rs.*
 import jakarta.ws.rs.core.MediaType
 import org.bson.types.ObjectId
+import org.jboss.logging.Logger
 
 @Path("/restaurant")
 class RestaurantController {
+
+    companion object {
+        val LOG: Logger = Logger.getLogger(RestaurantController::class.java)
+    }
 
     @Inject
     lateinit var restaurantRepository: RestaurantRepository
@@ -30,6 +35,7 @@ class RestaurantController {
         try {
             objectId = ObjectId(id)
         } catch (e: Exception) {
+            LOG.error("Error parsing id", e)
             return Uni.createFrom().failure(e)
         }
 
@@ -57,6 +63,7 @@ class RestaurantController {
         try {
             objectId = ObjectId(id)
         } catch (e: Exception) {
+            LOG.error("Error parsing id", e)
             return Uni.createFrom().failure(e)
         }
 
