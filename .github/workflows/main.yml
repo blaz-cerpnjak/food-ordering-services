@@ -8,7 +8,7 @@ on:
       - '!README.md'
 
 jobs:
-  build-test-package:
+  test-user-management-api:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,7 @@ jobs:
       working-directory: ./UserManagementAPI
       run: mvn -B package --file pom.xml
       
-  build-test-orders-api:
+  test-order-processing-api:
     runs-on: ubuntu-latest
 
     steps:
@@ -64,4 +64,39 @@ jobs:
 
     - name: Run tests
       working-directory: ./OrderProcessingAPI
+      run: ./gradlew test
+
+  test-restaurant-management-api:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.10.0
+      with:
+        mongodb-version: 7.0.6
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Make gradlew executable (if needed)
+      working-directory: ./RestaurantManagementAPI
+      run: chmod +x ./gradlew
+
+    - name: Setup Gradle
+      working-directory: ./RestaurantManagementAPI
+      run: gradle wrapper --gradle-version 8.5
+
+    - name: Build with Gradle
+      working-directory: ./RestaurantManagementAPI
+      run: ./gradlew build --no-daemon
+
+    - name: Run tests
+      working-directory: ./RestaurantManagementAPI
       run: ./gradlew test
