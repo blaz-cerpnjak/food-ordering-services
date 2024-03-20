@@ -4,6 +4,7 @@ import com.blazc.model.Product
 import io.quarkus.mongodb.panache.reactive.ReactivePanacheMongoRepository
 import io.smallrye.mutiny.Uni
 import jakarta.enterprise.context.ApplicationScoped
+import org.bson.types.ObjectId
 
 @ApplicationScoped
 class ProductRepository: ReactivePanacheMongoRepository<Product> {
@@ -12,12 +13,8 @@ class ProductRepository: ReactivePanacheMongoRepository<Product> {
         return persist(product)
     }
 
-    fun getAllByRestaurantId(restaurantId: String): Uni<List<Product>> {
+    fun getAllByRestaurantId(restaurantId: ObjectId): Uni<List<Product>> {
         return find("restaurantId", restaurantId).list()
-    }
-
-    fun getAll(): Uni<List<Product>> {
-        return listAll()
     }
 
 }

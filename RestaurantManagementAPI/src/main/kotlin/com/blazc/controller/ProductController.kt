@@ -1,7 +1,7 @@
 package com.blazc.controller
 
-import com.blazc.repository.ProductRepository
 import com.blazc.model.Product
+import com.blazc.repository.ProductRepository
 import io.smallrye.mutiny.Uni
 import jakarta.inject.Inject
 import jakarta.ws.rs.*
@@ -43,16 +43,19 @@ class ProductController {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    fun getAllProducts(): Uni<List<Product>> {
-        return productRepository.getAll()
-    }
-
-    @GET
     @Path("/restaurant/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     fun getAllProductsByRestaurantId(@PathParam("id") restaurantId: String): Uni<List<Product>> {
-        return productRepository.getAllByRestaurantId(restaurantId)
+        val objectId: ObjectId
+
+        try {
+            objectId = ObjectId(restaurantId)
+        } catch (e: Exception) {
+            LOG.error("Error parsing id", e)
+            return Uni.createFrom().failure(e)
+        }
+
+        return productRepository.getAllByRestaurantId(objectId)
     }
 
 
