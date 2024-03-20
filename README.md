@@ -1,7 +1,4 @@
 # Food Ordering System 📱 🚙 🍕
- 
-### TODO:
-- RestaurantsAPI
 
 ## Overview
 This project serves as an example of food ordering system using a microservice approach.
@@ -55,3 +52,18 @@ service OrderService {
   rpc Health (Empty) returns (Confirmation) {}
 }
 ```
+
+## Restaurant Management API [Reactive REST]
+Reactive REST api with reactive mongo db
+
+### How to run
+
+```console
+~$ cd RestaurantManagementAPI
+~$ docker-compose up
+```
+
+Restaurant Management REST API will be avaiable on ```grpc://localhost:8080```.
+
+### Unit Tests
+Before running unit tests, ensure that you have a local MongoDB instance running on ```localhost:27017```.
