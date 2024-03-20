@@ -20,6 +20,7 @@ dependencies {
     testImplementation 'io.quarkus:quarkus-junit5'
     implementation 'io.quarkus:quarkus-smallrye-openapi'
     implementation 'org.jboss.logging:jboss-logging'
+    testImplementation 'io.rest-assured:rest-assured:4.3.3'
 }
 
 group 'com.blazc'

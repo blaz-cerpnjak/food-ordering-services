@@ -10,7 +10,7 @@ import org.bson.types.ObjectId
 class ProductRepository: ReactivePanacheMongoRepository<Product> {
 
     fun create(product: Product): Uni<Product> {
-        return persist(product)
+        return persist(product).onItem().transform { product }
     }
 
     fun getAllByRestaurantId(restaurantId: ObjectId): Uni<List<Product>> {
