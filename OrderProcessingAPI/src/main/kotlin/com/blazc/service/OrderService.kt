@@ -4,17 +4,22 @@ import com.blazc.OrderGrpc
 import com.blazc.OrderServiceGrpc
 import com.blazc.model.order.Order
 import com.blazc.repository.OrderRepository
+import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import io.quarkus.grpc.GrpcService
 import jakarta.inject.Inject
 import org.bson.types.ObjectId
-import io.grpc.Status
+import org.eclipse.microprofile.reactive.messaging.Channel
+import org.eclipse.microprofile.reactive.messaging.Emitter
 
 @GrpcService
 class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
 
     @Inject
     lateinit var orderRepository: OrderRepository
+
+    @Channel("orders")
+    private lateinit var emmiter: Emitter<String>
 
     override fun health(request: OrderGrpc.Empty, responseObserver: StreamObserver<OrderGrpc.Confirmation>) {
         val confirmation = OrderGrpc.Confirmation.newBuilder()
@@ -44,6 +49,8 @@ class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
             .setError("")
             .setMessage("created")
             .build()
+
+        emmiter.send("${order.id}:${order.status}")
 
         responseObserver.onNext(response)
         responseObserver.onCompleted()
@@ -136,6 +143,8 @@ class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
             .setError("")
             .setMessage("updated")
             .build()
+
+        emmiter.send("${order.id}:${order.status}")
 
         responseObserver.onNext(response)
         responseObserver.onCompleted()

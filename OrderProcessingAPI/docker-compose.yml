@@ -14,6 +14,23 @@ services:
     networks:
       - mongo_db_network
 
+  rabbitmq:
+    container_name: rabbitmq_container
+    build:
+      context: .
+      dockerfile: ./src/main/docker/Dockerfile.rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - mongo_db_network
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - ./definitions.json:/etc/rabbitmq/definitions.json
+
   order_processing_api:
     build:
       context: .
@@ -21,11 +38,13 @@ services:
     restart: always
     environment:
       MONGO_DB_URI: mongodb://mongo_db:27017/orders_system_db
+      RABBITMQ_HOST: rabbitmq_container
     ports:
       - "8080:8080"
       - "9000:9000"
     depends_on:
       - mongo_db
+      - rabbitmq
     networks:
       - mongo_db_network
 
