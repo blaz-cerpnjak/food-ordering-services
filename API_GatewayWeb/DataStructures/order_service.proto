@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package com.blazc;
+
+option go_package = "com.blazc";
+
+service OrderService {
+  rpc CreateOrder (Order) returns (Confirmation) {}
+  rpc GetOrder (GetOrderRequest) returns (Order) {}
+  rpc UpdateOrder (Order) returns (Confirmation) {}
+  rpc GetOrdersBySeller (GetOrdersRequest) returns (stream Order) {}
+  rpc GetOrdersByDeliveryPerson (GetOrdersRequest) returns (stream Order) {}
+  rpc DeleteOrder (DeleteOrderRequest) returns (Confirmation) {}
+  rpc Health (Empty) returns (Confirmation) {}
+}
+
+message Empty {}
+
+message Confirmation {
+  string message = 2;
+  string error = 3;
+}
+
+message GetOrdersRequest {
+  string id = 1;
+}
+
+message GetOrderRequest {
+  string id = 1;
+}
+
+message DeleteOrderRequest {
+  string id = 1;
+}
+
+message Order {
+  string id = 1;
+  string sellerId = 2;
+  string deliveryPersonId = 3;
+  string address = 4;
+  string customerName = 5;
+  repeated OrderItem items = 6;
+  OrderStatus status = 7;
+  string orderDate = 8;
+  PaymentType paymentType = 9;
+  int32 totalPrice = 10;
+}
+
+message OrderItem {
+  string id = 1;
+  Product product = 2;
+  int32 quantity = 3;
+  int32 price = 4;
+}
+
+message Product {
+  string id = 1;
+  string name = 2;
+  int32 price = 3;
+}
+
+enum PaymentType {
+  CREDIT_CARD = 0;
+  CASH = 2;
+}
+
+enum OrderStatus {
+  PENDING = 0;
+  PREPARING = 1;
+  READY_FOR_PICKUP = 2;
+  DELIVERING = 3;
+  DELIVERED = 4;
+  CANCELLED = 5;
+}
