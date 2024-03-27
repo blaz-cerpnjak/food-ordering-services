@@ -6,8 +6,6 @@ services:
     image: mongo:7.0.6
     volumes:
       - mongo_data:/data/mongo
-    ports:
-      - "27017:27017"
     restart: unless-stopped
 
   restaurant_management_api:
@@ -18,7 +16,7 @@ services:
     environment:
       MONGO_DB_URI: mongodb://mongo_db:27017/restaurant_db
     ports:
-      - "8081:8080"
+      - "8082:8080"
     depends_on:
       - mongo_db
 
