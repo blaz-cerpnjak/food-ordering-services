@@ -29,7 +29,7 @@ func (a *Controller) Start() {
 	a.done = make(chan bool, 0)
 
 	srv := &http.Server{
-		Addr:         ":8000",
+		Addr:         ":8080",
 		Handler:      engine,
 		ReadTimeout:  20 * time.Second,
 		WriteTimeout: 30 * time.Second,
