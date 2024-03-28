@@ -36,7 +36,7 @@ func (c *Controller) GetAllUsers(ctx context.Context) (users []DataStructures.Us
 }
 
 func (c *Controller) GetUserById(ctx context.Context, id primitive.ObjectID) (user DataStructures.User, err error) {
-	url := fmt.Sprintf("%s/users/%s", getEnv("USERS_API", "http://localhost:8081/api/v1"), user.Id.Hex())
+	url := fmt.Sprintf("%s/users/%s", getEnv("USERS_API", "http://localhost:8081/api/v1"), id.Hex())
 
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
