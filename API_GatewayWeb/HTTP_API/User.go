@@ -2,7 +2,6 @@ package HTTP_API
 
 import (
 	"API_GatewayWeb/DataStructures"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -40,8 +39,6 @@ func (a *Controller) createUser(ctx *gin.Context) {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	fmt.Println(user)
 
 	createdUser, err := a.logic.CreateUser(ctx.Request.Context(), user)
 	if err != nil {

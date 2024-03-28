@@ -36,9 +36,9 @@ type Order struct {
 	Address          string             `json:"address" bson:"address"`
 	CustomerName     string             `json:"customerName" bson:"customerName"`
 	OrderItems       []OrderItem        `json:"items" bson:"items"`
-	Status           int8               `json:"status" bson:"status"`
+	Status           string             `json:"status" bson:"status"`
 	OrderDate        time.Time          `json:"orderDate" bson:"orderDate"`
-	PaymentType      int8               `json:"paymentType" bson:"paymentType"`
+	PaymentType      string             `json:"paymentType" bson:"paymentType"`
 	TotalPrice       int32              `json:"totalPrice" bson:"totalPrice"` // in cents
 }
 

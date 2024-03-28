@@ -10,6 +10,7 @@ func (a *Controller) registerRoutes(engine *gin.Engine) {
 	a.registerUserRoutes(api.Group("/users"))
 	a.registerRestaurantRoutes(api.Group("/restaurants"))
 	a.registerProductRoutes(api.Group("/products"))
+	a.registerOrderRoutes(api.Group("/orders"))
 }
 
 func (a *Controller) registerUserRoutes(api *gin.RouterGroup) {
@@ -34,4 +35,11 @@ func (a *Controller) registerProductRoutes(api *gin.RouterGroup) {
 	api.GET("/:id", a.getProductById)
 	api.PUT("/:id", a.updateProduct)
 	api.DELETE("/:id", a.deleteProduct)
+}
+
+func (a *Controller) registerOrderRoutes(api *gin.RouterGroup) {
+	api.POST("/", a.createOrder)
+	api.GET("/restaurant/:id", a.getOrdersBySellerId)
+	api.PUT("/:id", a.updateOrder)
+	api.DELETE("/:id", a.deleteOrder)
 }
