@@ -11,8 +11,8 @@ services:
     networks:
       - native
 
-  user_management_api:
-    container_name: users_management_api
+  user-management-api:
+    container_name: user-management-api
     build:
       context: UserManagementAPI
       dockerfile: Dockerfile
@@ -35,8 +35,8 @@ services:
     networks:
       - native
 
-  restaurant_management_api:
-    container_name: restaurant_management_api
+  restaurant-management-api:
+    container_name: restaurant-management-api
     build:
       context: RestaurantManagementAPI
       dockerfile: ./src/main/docker/Dockerfile.jvm
@@ -59,8 +59,8 @@ services:
     networks:
       - native
 
-  order_processing_api:
-    container_name: order_processing_grpc_api
+  order-processing-grpc-api:
+    container_name: order-processing-grpc-api
     build:
       context: OrderProcessingAPI
       dockerfile: ./src/main/docker/Dockerfile.jvm
@@ -76,15 +76,15 @@ services:
     networks:
       - native
 
-  web_api_gateway:
+  web-api-gateway:
     build:
-      context: API_GatewayWEB
+      context: API_GatewayWeb
       dockerfile: Dockerfile
     restart: always
     environment:
-      USERS_API: http://users_management_api:8080/api/v1
-      RESTAURANTS_API: http://restaurant_management_api:8080
-      ORDERS_GRPC_API: order_processing_grpc_api:9000
+      USERS_API: http://user-management-api:8080/api/v1
+      RESTAURANTS_API: http://restaurant-management-api:8080
+      ORDERS_GRPC_API: order-processing-grpc-api:9000
     expose:
       - 8080
     ports:
