@@ -93,6 +93,23 @@ services:
     networks:
     - native
 
+  ### API Gateway for Mobile
+  mobile-api-gateway:
+    build:
+      context: API_GatewayMobile
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      USERS_API: http://user-management-api:8080/api/v1
+      RESTAURANTS_API: http://restaurant-management-api:8080
+      ORDERS_GRPC_API: order-processing-grpc-api:9000
+    expose:
+      - 8080
+    ports:
+    - "8081:8080"
+    networks:
+    - native
+
 networks:
   native:
     name: native-network
