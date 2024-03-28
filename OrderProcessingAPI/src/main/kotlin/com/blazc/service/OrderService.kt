@@ -8,11 +8,13 @@ import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import io.quarkus.grpc.GrpcService
 import jakarta.inject.Inject
+import jakarta.inject.Singleton
 import org.bson.types.ObjectId
 import org.eclipse.microprofile.reactive.messaging.Channel
 import org.eclipse.microprofile.reactive.messaging.Emitter
 
 @GrpcService
+@Singleton
 class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
 
     @Inject

@@ -62,6 +62,8 @@ func (c *Controller) GetOrdersBySellerId(ctx context.Context, id primitive.Objec
 
 	orders = make([]DataStructures.Order, 0)
 
+	fmt.Println("Getting orders")
+
 	for {
 		orderGrpc, err := orderStream.Recv()
 		if err != nil {
@@ -75,6 +77,7 @@ func (c *Controller) GetOrdersBySellerId(ctx context.Context, id primitive.Objec
 			continue
 		}
 
+		fmt.Println(order)
 		orders = append(orders, order)
 	}
 

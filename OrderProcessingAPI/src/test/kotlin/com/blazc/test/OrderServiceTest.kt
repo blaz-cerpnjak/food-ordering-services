@@ -4,8 +4,9 @@ import com.blazc.OrderGrpc
 import com.blazc.OrderServiceGrpc
 import io.grpc.ManagedChannelBuilder
 import io.quarkus.test.junit.QuarkusTest
-import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
 
 @QuarkusTest
 class OrderServiceTest {
@@ -19,7 +20,7 @@ class OrderServiceTest {
         fun setup() {
             order = OrderGrpc.Order.newBuilder()
                 .setId("65f33d0f5cc012d6bef8c985")
-                .setOrderDate("2024-03-14T17:05:24+00:00")
+                .setTimestamp(1711617513)
                 .setStatus(OrderGrpc.OrderStatus.PENDING)
                 .setAddress("123 Main St")
                 .setCustomerName("John Doe")

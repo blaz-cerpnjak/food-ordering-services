@@ -76,6 +76,7 @@ services:
     networks:
       - native
 
+  ### API Gateway for Web
   web-api-gateway:
     build:
       context: API_GatewayWeb

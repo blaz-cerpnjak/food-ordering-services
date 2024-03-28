@@ -60,7 +60,7 @@ func ConvertOrderToGrpc(order DataStructures.Order) (orderGrpc *pb.Order) {
 		CustomerName:     order.CustomerName,
 		Items:            orderItemsGrpc,
 		Status:           ConvertFromOrderStatusString(order.Status),
-		OrderDate:        time.Now().Format(time.RFC3339),
+		Timestamp:        time.Now().UTC().Unix(),
 		PaymentType:      ConvertFromPaymentTypeString(order.PaymentType),
 		TotalPrice:       order.TotalPrice,
 	}
@@ -115,11 +115,7 @@ func ConvertOrderFromGrpc(orderGrpc *pb.Order) (order DataStructures.Order, err 
 
 	order.OrderItems = items
 	order.Status = orderGrpc.Status.String()
-	order.OrderDate, err = time.Parse(time.RFC3339, orderGrpc.OrderDate)
-	if err != nil {
-		return
-	}
-
+	order.Timestamp = orderGrpc.Timestamp
 	order.PaymentType = orderGrpc.PaymentType.String()
 	order.TotalPrice = orderGrpc.TotalPrice
 	return

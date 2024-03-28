@@ -2,7 +2,6 @@ package DataStructures
 
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"time"
 )
 
 type User struct {
@@ -37,7 +36,7 @@ type Order struct {
 	CustomerName     string             `json:"customerName" bson:"customerName"`
 	OrderItems       []OrderItem        `json:"items" bson:"items"`
 	Status           string             `json:"status" bson:"status"`
-	OrderDate        time.Time          `json:"orderDate" bson:"orderDate"`
+	Timestamp        int64              `json:"timestamp" bson:"timestamp"`
 	PaymentType      string             `json:"paymentType" bson:"paymentType"`
 	TotalPrice       int32              `json:"totalPrice" bson:"totalPrice"` // in cents
 }

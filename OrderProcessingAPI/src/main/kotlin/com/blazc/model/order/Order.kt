@@ -2,9 +2,8 @@ package com.blazc.model.order
 
 import com.blazc.OrderGrpc
 import com.blazc.model.payment.PaymentType
-import com.blazc.utils.DateFormatter
 import org.bson.types.ObjectId
-import java.time.LocalDateTime
+import java.time.Instant
 
 data class Order (
     var id: ObjectId? = null,
@@ -14,7 +13,7 @@ data class Order (
     var customerName: String,
     var items: List<OrderItem>,
     var status: OrderStatus,
-    var orderDate: LocalDateTime,
+    var timestamp: Long,
     var paymentType: PaymentType,
     var totalPrice: Int
 ) {
@@ -27,7 +26,7 @@ data class Order (
         customerName = "",
         items = emptyList(),
         status = OrderStatus.PENDING,
-        orderDate = LocalDateTime.now(),
+        timestamp = Instant.now().epochSecond,
         paymentType = PaymentType.CASH,
         totalPrice = 0
     )
@@ -44,7 +43,7 @@ data class Order (
                     OrderItem.fromGrpc(it)
                 },
                 status = OrderStatus.fromGrpc(order.status),
-                orderDate = DateFormatter.toLocalDateTime(order.orderDate),
+                timestamp = order.timestamp,
                 paymentType = PaymentType.fromGrpc(order.paymentType),
                 totalPrice = order.totalPrice
             )
@@ -61,7 +60,7 @@ data class Order (
                     OrderItem.toGrpc(it)
                 })
                 .setStatus(OrderStatus.toGrpc(order.status))
-                .setOrderDate(DateFormatter.toString(order.orderDate))
+                .setTimestamp(order.timestamp)
                 .setPaymentType(PaymentType.toGrpc(order.paymentType))
                 .setTotalPrice(order.totalPrice)
                 .build()
