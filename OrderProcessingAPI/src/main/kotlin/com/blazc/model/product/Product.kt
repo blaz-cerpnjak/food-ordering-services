@@ -7,13 +7,15 @@ import org.bson.types.ObjectId
 data class Product(
     var id: ObjectId? = null,
     var name: String,
-    var price: Int // 100 = 1
+    var price: Int, // 100 = 1
+    var image: String
 ) {
 
     constructor() : this(
         id = ObjectId(),
         name = "",
-        price = 0
+        price = 0,
+        image = ""
     )
 
     companion object {
@@ -21,7 +23,8 @@ data class Product(
             return Product(
                 id = ObjectId(productGrpc.id),
                 name = productGrpc.name,
-                price = productGrpc.price
+                price = productGrpc.price,
+                image = productGrpc.image
             )
         }
 
@@ -30,6 +33,7 @@ data class Product(
                 .setId(product.id.toString())
                 .setName(product.name)
                 .setPrice(product.price)
+                .setImage(product.image)
                 .build()
         }
     }

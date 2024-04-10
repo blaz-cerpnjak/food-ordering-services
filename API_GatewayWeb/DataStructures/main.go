@@ -26,6 +26,7 @@ type Product struct {
 	RestaurantId primitive.ObjectID `json:"restaurantId" bson:"restaurantId"`
 	Name         string             `json:"name" bson:"name"`
 	Price        int32              `json:"price" bson:"price"` // in cents
+	Image        string             `json:"image" bson:"image"`
 }
 
 type Order struct {

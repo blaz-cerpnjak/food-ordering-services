@@ -27,6 +27,12 @@ class ProductController {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    fun getAllProducts(): Uni<List<Product>> {
+        return productRepository.listAll()
+    }
+
+    @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     fun getProductById(@PathParam("id") id: String): Uni<Product> {
