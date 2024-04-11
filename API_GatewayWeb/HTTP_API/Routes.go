@@ -30,6 +30,7 @@ func (a *Controller) registerRestaurantRoutes(api *gin.RouterGroup) {
 }
 
 func (a *Controller) registerProductRoutes(api *gin.RouterGroup) {
+	api.GET("/", a.getAllProducts)
 	api.GET("/restaurant/:id", a.getAllProductsByRestaurantId)
 	api.POST("/", a.createProduct)
 	api.GET("/:id", a.getProductById)

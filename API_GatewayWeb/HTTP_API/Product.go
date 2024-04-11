@@ -6,6 +6,16 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (a *Controller) getAllProducts(ctx *gin.Context) {
+	products, err := a.logic.GetAllProducts(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(200, products)
+}
+
 func (a *Controller) getAllProductsByRestaurantId(ctx *gin.Context) {
 	id, err := primitive.ObjectIDFromHex(ctx.Param("id"))
 	if err != nil {
