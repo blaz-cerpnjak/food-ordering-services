@@ -40,7 +40,14 @@ func (a *Controller) updateOrder(ctx *gin.Context) {
 		return
 	}
 
-	confirmation, err := a.logic.UpdateOrder(ctx.Request.Context(), id)
+	var order DataStructures.Order
+	err = ctx.BindJSON(&order)
+	if err != nil {
+		ctx.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	confirmation, err := a.logic.UpdateOrder(ctx.Request.Context(), id, order)
 	if err != nil {
 		ctx.JSON(500, gin.H{"error": err.Error()})
 		return

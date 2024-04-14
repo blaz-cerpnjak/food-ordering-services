@@ -62,8 +62,11 @@ func (c *Controller) CreateOrder(ctx context.Context, order DataStructures.Order
 	return
 }
 
-func (c *Controller) UpdateOrder(ctx context.Context, id primitive.ObjectID) (confirmation *pb.Confirmation, err error) {
-	confirmation, err = c.grpc.Client.UpdateOrder(ctx, &pb.Order{Id: id.Hex()})
+func (c *Controller) UpdateOrder(ctx context.Context, id primitive.ObjectID, order DataStructures.Order) (confirmation *pb.Confirmation, err error) {
+
+	orderGrpc := Converter.ConvertOrderToGrpc(order)
+
+	confirmation, err = c.grpc.Client.UpdateOrder(ctx, orderGrpc)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
