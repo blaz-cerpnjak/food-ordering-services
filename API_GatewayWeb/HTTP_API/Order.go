@@ -6,6 +6,16 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (a *Controller) getAllOrders(ctx *gin.Context) {
+	orders, err := a.logic.GetAllOrders(ctx.Request.Context())
+	if err != nil {
+		ctx.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(200, orders)
+}
+
 func (a *Controller) createOrder(ctx *gin.Context) {
 	var order DataStructures.Order
 	err := ctx.BindJSON(&order)

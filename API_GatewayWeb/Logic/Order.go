@@ -20,6 +20,35 @@ func (c *Controller) Health(ctx context.Context) (status string, err error) {
 	return
 }
 
+func (c *Controller) GetAllOrders(ctx context.Context) (orders []DataStructures.Order, err error) {
+	orderStream, err := c.grpc.Client.GetOrders(ctx, &pb.Empty{})
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	orders = make([]DataStructures.Order, 0)
+
+	for {
+		orderGrpc, err := orderStream.Recv()
+		if err != nil {
+			fmt.Println(err.Error())
+			break
+		}
+
+		order, err := Converter.ConvertOrderFromGrpc(orderGrpc)
+		if err != nil {
+			fmt.Println(err.Error())
+			continue
+		}
+
+		fmt.Println(order)
+		orders = append(orders, order)
+	}
+
+	return
+}
+
 func (c *Controller) CreateOrder(ctx context.Context, order DataStructures.Order) (confirmation *pb.Confirmation, err error) {
 
 	orderGrpc := Converter.ConvertOrderToGrpc(order)

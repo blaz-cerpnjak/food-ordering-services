@@ -20,8 +20,8 @@ class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
     @Inject
     lateinit var orderRepository: OrderRepository
 
-    @Channel("orders")
-    private lateinit var emmiter: Emitter<String>
+    //@Channel("orders")
+    //private lateinit var emmiter: Emitter<String>
 
     override fun health(request: OrderGrpc.Empty, responseObserver: StreamObserver<OrderGrpc.Confirmation>) {
         val confirmation = OrderGrpc.Confirmation.newBuilder()
@@ -52,7 +52,7 @@ class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
             .setMessage("created")
             .build()
 
-        emmiter.send("${order.id}:${order.status}")
+        //emmiter.send("${order.id}:${order.status}")
 
         responseObserver.onNext(response)
         responseObserver.onCompleted()
@@ -83,6 +83,16 @@ class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
 
         val response = Order.toGrpc(order)
         responseObserver.onNext(response)
+        responseObserver.onCompleted()
+    }
+
+    override fun getOrders(request: OrderGrpc.Empty?, responseObserver: StreamObserver<OrderGrpc.Order>) {
+        val orders = orderRepository.listAll()
+
+        orders.forEach {
+            responseObserver.onNext(Order.toGrpc(it))
+        }
+
         responseObserver.onCompleted()
     }
 
@@ -146,7 +156,7 @@ class OrderService : OrderServiceGrpc.OrderServiceImplBase() {
             .setMessage("updated")
             .build()
 
-        emmiter.send("${order.id}:${order.status}")
+        //emmiter.send("${order.id}:${order.status}")
 
         responseObserver.onNext(response)
         responseObserver.onCompleted()

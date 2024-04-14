@@ -8,6 +8,7 @@ service OrderService {
   rpc CreateOrder (Order) returns (Confirmation) {}
   rpc GetOrder (GetOrderRequest) returns (Order) {}
   rpc UpdateOrder (Order) returns (Confirmation) {}
+  rpc GetOrders (Empty) returns (stream Order) {}
   rpc GetOrdersBySeller (GetOrdersRequest) returns (stream Order) {}
   rpc GetOrdersByDeliveryPerson (GetOrdersRequest) returns (stream Order) {}
   rpc DeleteOrder (DeleteOrderRequest) returns (Confirmation) {}
@@ -39,18 +40,11 @@ message Order {
   string deliveryPersonId = 3;
   string address = 4;
   string customerName = 5;
-  repeated OrderItem items = 6;
+  repeated Product items = 6;
   OrderStatus status = 7;
   int64 timestamp = 8;
   PaymentType paymentType = 9;
   int32 totalPrice = 10;
-}
-
-message OrderItem {
-  string id = 1;
-  Product product = 2;
-  int32 quantity = 3;
-  int32 price = 4;
 }
 
 message Product {
@@ -58,6 +52,7 @@ message Product {
   string name = 2;
   int32 price = 3;
   string image = 4;
+  string restaurantId = 5;
 }
 
 enum PaymentType {

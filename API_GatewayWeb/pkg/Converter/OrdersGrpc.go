@@ -3,6 +3,7 @@ package Converter
 import (
 	"API_GatewayWeb/DataStructures"
 	pb "API_GatewayWeb/DataStructures/com.blazc"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 )
@@ -38,17 +39,14 @@ func ConvertFromPaymentTypeString(paymentType string) (paymentTypeGrpc pb.Paymen
 
 func ConvertOrderToGrpc(order DataStructures.Order) (orderGrpc *pb.Order) {
 
-	orderItemsGrpc := make([]*pb.OrderItem, 0)
-	for _, item := range order.OrderItems {
-		orderItemsGrpc = append(orderItemsGrpc, &pb.OrderItem{
-			Id:       item.Id.Hex(),
-			Price:    item.Price,
-			Quantity: item.Quantity,
-			Product: &pb.Product{
-				Id:    item.Id.Hex(),
-				Name:  item.Product.Name,
-				Price: item.Product.Price,
-			},
+	itemsGrpc := make([]*pb.Product, 0)
+	for _, item := range order.Items {
+		itemsGrpc = append(itemsGrpc, &pb.Product{
+			Id:           item.Id.Hex(),
+			Name:         item.Name,
+			Price:        item.Price,
+			Image:        item.Image,
+			RestaurantId: item.RestaurantId.Hex(),
 		})
 	}
 
@@ -58,7 +56,7 @@ func ConvertOrderToGrpc(order DataStructures.Order) (orderGrpc *pb.Order) {
 		DeliveryPersonId: order.DeliveryPersonId.Hex(),
 		Address:          order.Address,
 		CustomerName:     order.CustomerName,
-		Items:            orderItemsGrpc,
+		Items:            itemsGrpc,
 		Status:           ConvertFromOrderStatusString(order.Status),
 		Timestamp:        time.Now().UTC().Unix(),
 		PaymentType:      ConvertFromPaymentTypeString(order.PaymentType),
@@ -72,48 +70,54 @@ func ConvertOrderFromGrpc(orderGrpc *pb.Order) (order DataStructures.Order, err 
 
 	order.Id, err = primitive.ObjectIDFromHex(orderGrpc.Id)
 	if err != nil {
+		fmt.Println("orderId error: ", err.Error())
 		return
 	}
 
 	order.SellerId, err = primitive.ObjectIDFromHex(orderGrpc.SellerId)
 	if err != nil {
+		fmt.Println("sellerId error: ", err.Error())
 		return
 	}
 
 	order.DeliveryPersonId, err = primitive.ObjectIDFromHex(orderGrpc.DeliveryPersonId)
 	if err != nil {
+		fmt.Println("deliveryPersonId error: ", err.Error())
 		return
 	}
 
 	order.Address = orderGrpc.Address
 	order.CustomerName = orderGrpc.CustomerName
 
-	items := make([]DataStructures.OrderItem, 0)
+	items := make([]DataStructures.Product, 0)
 	for _, item := range orderGrpc.Items {
-		id, err := primitive.ObjectIDFromHex(item.Id)
+
+		productId, err := primitive.ObjectIDFromHex(item.Id)
 		if err != nil {
+			fmt.Println("productId error: ", err.Error())
 			return order, err
 		}
 
-		productId, err := primitive.ObjectIDFromHex(item.Product.Id)
+		fmt.Println("restaurantId: ", item.RestaurantId)
+
+		restaurantId, err := primitive.ObjectIDFromHex(item.RestaurantId)
 		if err != nil {
+			fmt.Println("restaurantId error: ", err.Error())
 			return order, err
 		}
 
-		orderItem := DataStructures.OrderItem{
-			Id:       id,
-			Price:    item.Price,
-			Quantity: item.Quantity,
-			Product: DataStructures.Product{
-				Id:    productId,
-				Name:  item.Product.Name,
-				Price: item.Product.Price,
-			},
+		product := DataStructures.Product{
+			Id:           productId,
+			Name:         item.Name,
+			Price:        item.Price,
+			Image:        item.Image,
+			RestaurantId: restaurantId,
 		}
-		items = append(items, orderItem)
+
+		items = append(items, product)
 	}
 
-	order.OrderItems = items
+	order.Items = items
 	order.Status = orderGrpc.Status.String()
 	order.Timestamp = orderGrpc.Timestamp
 	order.PaymentType = orderGrpc.PaymentType.String()

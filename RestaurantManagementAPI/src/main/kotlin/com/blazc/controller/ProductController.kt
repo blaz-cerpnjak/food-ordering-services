@@ -23,7 +23,7 @@ class ProductController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     fun createProduct(product: Product): Uni<Product> {
-        return productRepository.create(product)
+        return productRepository.add(product)
     }
 
     @GET

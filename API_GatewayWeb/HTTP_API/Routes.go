@@ -39,6 +39,7 @@ func (a *Controller) registerProductRoutes(api *gin.RouterGroup) {
 }
 
 func (a *Controller) registerOrderRoutes(api *gin.RouterGroup) {
+	api.GET("/", a.getAllOrders)
 	api.POST("/", a.createOrder)
 	api.GET("/restaurant/:id", a.getOrdersBySellerId)
 	api.PUT("/:id", a.updateOrder)

@@ -35,16 +35,9 @@ type Order struct {
 	DeliveryPersonId primitive.ObjectID `json:"deliveryPersonId" bson:"deliveryPersonId"`
 	Address          string             `json:"address" bson:"address"`
 	CustomerName     string             `json:"customerName" bson:"customerName"`
-	OrderItems       []OrderItem        `json:"items" bson:"items"`
+	Items            []Product          `json:"items" bson:"items"`
 	Status           string             `json:"status" bson:"status"`
 	Timestamp        int64              `json:"timestamp" bson:"timestamp"`
 	PaymentType      string             `json:"paymentType" bson:"paymentType"`
 	TotalPrice       int32              `json:"totalPrice" bson:"totalPrice"` // in cents
-}
-
-type OrderItem struct {
-	Id       primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	Product  Product            `json:"product" bson:"product"`
-	Quantity int32              `json:"quantity" bson:"quantity"`
-	Price    int32              `json:"price" bson:"price"` // in cents
 }
