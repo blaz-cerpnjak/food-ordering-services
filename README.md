@@ -1,5 +1,9 @@
 # Food Ordering System 📱 🚙 🍕
 
+<img alt="Header" src="Screenshots/home_page.png">
+<img alt="Image 1" src="Screenshots/basket_page.png">
+<img alt="Image 2" src="Screenshots/orders_page.png">
+
 ## Overview
 This project serves as an example of food ordering system using a microservice approach.
 
