@@ -13,7 +13,7 @@ import Navbar from "./Navbar";
 import ProductsPage from "./ProductsPage";
 import {createRoot} from "react-dom/client";
 import {BasketProvider, useBasket} from "./context/BasketContext";
-import BasketPage2 from "./BasketPage";
+import BasketPage from "./BasketPage";
 
 const App = () => (
     <PrimeReactProvider>
@@ -25,7 +25,7 @@ const App = () => (
                         <Routes>
                             <Route exact path="/" element={<ProductsPage />} />
                             <Route path="/orders" element={<OrderHistoryItems />} />
-                            <Route path="/basket" element={<BasketPage2 />} />
+                            <Route path="/basket" element={<BasketPage />} />
                         </Routes>
                     </div>
                 </div>

@@ -6,6 +6,9 @@ func (a *Controller) registerRoutes(engine *gin.Engine) {
 
 	api := engine.Group("/api/v1")
 	api.GET("/", a.Ping)
+	api.GET("/token/generate/:userId", a.generateApiToken)
+
+	api.Use(a.checkAuth())
 
 	a.registerUserRoutes(api.Group("/users"))
 	a.registerRestaurantRoutes(api.Group("/restaurants"))

@@ -9,14 +9,16 @@ import (
 type Controller struct {
 	httpClient *http.Client
 	grpc       *gRPC_Client.Controller
+	jwtSecret  []byte
 }
 
-func New(grpc *gRPC_Client.Controller) (*Controller, error) {
+func New(grpc *gRPC_Client.Controller, jwtSecret string) (*Controller, error) {
 	httpClient := &http.Client{}
 
 	return &Controller{
 		httpClient: httpClient,
 		grpc:       grpc,
+		jwtSecret:  []byte(jwtSecret),
 	}, nil
 }
 

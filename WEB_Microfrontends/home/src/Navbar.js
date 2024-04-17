@@ -8,7 +8,7 @@ import { useBasket } from "./context/BasketContext";
 
 export default function Navbar() {
     const { state: basketState } = useBasket();
-    const badgeNumber = basketState.items.length;
+    const basketBadgeNumber = basketState.items.length;
 
     const itemRenderer = (item) => (
         <Link to={item.path} className="flex align-items-center p-menuitem-link">
@@ -28,14 +28,13 @@ export default function Navbar() {
             label: 'Orders',
             icon: 'pi pi-envelope',
             path: '/orders',
-            badge: 3,
             template: itemRenderer
         },
         {
             label: 'Basket',
             icon: 'pi pi-shopping-cart',
             path: '/basket',
-            badge: badgeNumber,
+            badge: basketBadgeNumber,
             template: itemRenderer
         }
     ];

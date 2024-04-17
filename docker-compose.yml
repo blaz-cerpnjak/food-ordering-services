@@ -83,6 +83,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
+      JWT_SECRET: A9BBD31CB41A4629875353E3A1AA9
       USERS_API: http://user-management-api:8080/api/v1
       RESTAURANTS_API: http://restaurant-management-api:8080
       ORDERS_GRPC_API: order-processing-grpc-api:9000
@@ -117,6 +118,8 @@ services:
     build:
       context: ./WEB_Microfrontends/orders
       dockerfile: Dockerfile
+    environment:
+      API_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWZlYjU2YjI2ZTEwYjRjMDkzNzZjNiIsImV4cCI6NjQ0OTQ3MDg3OH0.fOWJzwFCdb6pWJkr8wJUxW1bvZ2PWsrU4qjanFq6tpU
     ports:
       - "3001:3001"
     networks:
@@ -129,6 +132,8 @@ services:
     build:
       context: ./WEB_Microfrontends/basket
       dockerfile: Dockerfile
+    environment:
+      API_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWZlYjU2YjI2ZTEwYjRjMDkzNzZjNiIsImV4cCI6NjQ0OTQ3MDg3OH0.fOWJzwFCdb6pWJkr8wJUxW1bvZ2PWsrU4qjanFq6tpU
     ports:
       - "3002:3002"
     networks:
@@ -141,6 +146,8 @@ services:
     build:
       context: ./WEB_Microfrontends/home
       dockerfile: Dockerfile
+    environment:
+      API_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWZlYjU2YjI2ZTEwYjRjMDkzNzZjNiIsImV4cCI6NjQ0OTQ3MDg3OH0.fOWJzwFCdb6pWJkr8wJUxW1bvZ2PWsrU4qjanFq6tpU
     ports:
       - "3000:3000"
     networks:

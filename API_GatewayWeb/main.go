@@ -20,13 +20,13 @@ func main() {
 
 	fmt.Println("gRPC connection established")
 
-	logicController, err := Logic.New(grpcClient)
+	logicController, err := Logic.New(grpcClient, getEnv("JWT_SECRET", ""))
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	httpAPI := HTTP_API.New(logicController)
+	httpAPI := HTTP_API.New(logicController, getEnv("JWT_SECRET", ""))
 	httpAPI.Start()
 
 	quit := make(chan os.Signal, 0)

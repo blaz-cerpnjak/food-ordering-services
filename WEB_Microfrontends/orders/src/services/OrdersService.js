@@ -4,6 +4,7 @@ export const getOrders = (order) =>
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': `Bearer ${process.env.API_TOKEN}`,
         }
     }).then((res) => {
         if (!res.ok) {
@@ -18,6 +19,7 @@ export const cancelOrder = (order) =>
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': `Bearer ${process.env.API_TOKEN}`,
         },
         body: JSON.stringify({
             ...order,

@@ -11,13 +11,15 @@ import (
 )
 
 type Controller struct {
-	logic *Logic.Controller
-	done  chan bool
+	logic     *Logic.Controller
+	jwtSecret []byte
+	done      chan bool
 }
 
-func New(logic *Logic.Controller) *Controller {
+func New(logic *Logic.Controller, jwtSecret string) *Controller {
 	return &Controller{
-		logic: logic,
+		logic:     logic,
+		jwtSecret: []byte(jwtSecret),
 	}
 }
 

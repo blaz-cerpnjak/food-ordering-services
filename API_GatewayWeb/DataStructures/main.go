@@ -1,8 +1,14 @@
 package DataStructures
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+type ApiKey struct {
+	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	jwt.StandardClaims
+}
 
 type User struct {
 	Id       primitive.ObjectID `json:"id" bson:"_id,omitempty"`
