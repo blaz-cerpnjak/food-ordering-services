@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  api_gateway_web:
+    container_name: api_gateway_web
+    build: .
+    environment:
+      MONGO_DB_URI: mongodb://localhost:27017
+    ports:
+      - "8080:8080"
+    restart: always

@@ -111,6 +111,29 @@ services:
     networks:
     - native
 
+  ### Exception Logging API
+  mongo_db_exceptions:
+    image: mongo:7.0.6
+    volumes:
+      - mongo_data_exceptions:/data/mongo
+    restart: unless-stopped
+    networks:
+      - native
+
+  exception-logging-api:
+    build:
+      context: ExceptionLoggingAPI
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - mongo_db_exceptions
+    expose:
+      - 8080
+    ports:
+    - "8082:8080"
+    networks:
+    - native
+
   # Orders Microfrontend
   orders-web-app:
     depends_on:
@@ -162,3 +185,4 @@ volumes:
   mongo_data_users:
   mongo_data_restaurants:
   mongo_data_orders:
+  mongo_data_exceptions:
