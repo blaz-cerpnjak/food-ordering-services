@@ -1,3 +1,5 @@
+<img alt="Header" src="Screenshots/home_page.png">
+
 # Food Ordering System 📱 🚙 🍕
 
 ## Overview
