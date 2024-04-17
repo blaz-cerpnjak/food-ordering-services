@@ -110,6 +110,42 @@ services:
     networks:
     - native
 
+  # Orders Microfrontend
+  orders-web-app:
+    depends_on:
+        - web-api-gateway
+    build:
+      context: ./WEB_Microfrontends/orders
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+      - native
+
+  # Basket Microfrontend
+  basket-web-app:
+    depends_on:
+        - orders-web-app
+    build:
+      context: ./WEB_Microfrontends/basket
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    networks:
+      - native
+
+  # Home Microfrontend
+  home-web-app:
+    depends_on:
+        - basket-web-app
+    build:
+      context: ./WEB_Microfrontends/home
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - native
+
 networks:
   native:
     name: native-network
